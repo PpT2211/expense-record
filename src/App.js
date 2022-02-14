@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { db } from './firebaseConfig';
 import { addDoc, collection, getDocs, doc, updateDoc, increment, getDoc, deleteField } from "firebase/firestore";
 
-
-
+// import { createRequire } from "module"
 
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
     ini()
 
   }, [])
-
 
 
   const status = (amt) => {
@@ -115,6 +113,7 @@ function App() {
         alert("You don't have that much money")
       }
     }
+    window.location.reload(false);
   }
 
   const resetWallet = async () => {
@@ -149,22 +148,38 @@ function App() {
     }
   }
 
+  const editRecords = async (id, text) => {
+    // var edited = prompt("Edit", text)
+    const recs = await getDoc(recordRef);
+    const edited = prompt("Edit", recs.data()[id])
+    await updateDoc(recordRef, {
+      [id]: edited
+    })
+    window.location.reload(false);
+  }
+
   return (
     <div className="App">
-      <button id="add" onClick={addUpdate}>Add</button>
-      <button id="spent" onClick={spentUpdate}>spent</button>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+      <div className='btn-group text-center'>
+        <button className='btn btn-outline-light' id="add" onClick={addUpdate}>Add</button>
+        <button className='btn btn-outline-light' id="spent" onClick={spentUpdate}>spent</button>
+      </div>
       <br />
       <br />
       <p id="statusText">{statusMsg}</p>
-      <div>
+      <div className='amount-box text-center'>
+        <img src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw" alt="wallet" />
         <h6>Wallet</h6>
         <p id="walletText">{pocketMoney}</p>
-        <button onClick={resetWallet}>Reset</button>
+        <button className='btn btn-outline-light' onClick={resetWallet}>Reset</button>
       </div>
+
       <div>
         <h6>Spent</h6>
         <p id="spentText">{spentMoney}</p>
-        <button onClick={resetSpent}>Reset</button>
+        <button className='btn btn-outline-light' onClick={resetSpent}>Reset</button>
       </div>
       <div>
         <h6>Record</h6>
@@ -172,8 +187,7 @@ function App() {
           return (
             <div key={records[i]}>
 
-              {i}: {records[i]}
-
+              {i}: {records[i]}   <button className='btn btn-outline-light' onClick={() => { editRecords(i, records[i]) }}>Edit</button>
             </div>)
         })}
       </div>
