@@ -8,7 +8,7 @@ import { GiPayMoney } from "react-icons/gi"
 import { BsFillJournalBookmarkFill } from "react-icons/bs"
 // import { createRequire } from "module"
 
-//For font scaling
+//For font/icon scaling
 // 1x - 14px
 // 2x - 28px
 // 3x - 42px
