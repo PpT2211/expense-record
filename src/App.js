@@ -3,9 +3,17 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { db } from './firebaseConfig';
 import { addDoc, collection, getDocs, doc, updateDoc, increment, getDoc, deleteField } from "firebase/firestore";
-
+import { FaWallet } from "react-icons/fa"
+import { GiPayMoney } from "react-icons/gi"
+import { BsFillJournalBookmarkFill } from "react-icons/bs"
 // import { createRequire } from "module"
 
+//For font scaling
+// 1x - 14px
+// 2x - 28px
+// 3x - 42px
+// 4x - 56px
+// 5x - 70px
 
 function App() {
   const [pocketMoney, setPocketMoney] = useState(0);
@@ -133,6 +141,7 @@ function App() {
       resetWallet()
 
     }
+    window.location.reload(false);
   }
   const resetSpent = async () => {
     var confirmation = prompt("Are you sure?(y/n)")
@@ -146,6 +155,7 @@ function App() {
     else if (confirmation == "n" || "N") {
       alert("Alright")
     }
+    window.location.reload(false);
   }
 
   const editRecords = async (id, text) => {
@@ -170,26 +180,37 @@ function App() {
       <br />
       <p id="statusText">{statusMsg}</p>
       <div className='amount-box text-center'>
-        <img src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw" alt="wallet" />
+        <FaWallet size={28} />
         <h6>Wallet</h6>
         <p id="walletText">{pocketMoney}</p>
         <button className='btn btn-outline-light' onClick={resetWallet}>Reset</button>
       </div>
-
+      <br />
       <div>
+        <GiPayMoney size={42} />
         <h6>Spent</h6>
         <p id="spentText">{spentMoney}</p>
         <button className='btn btn-outline-light' onClick={resetSpent}>Reset</button>
       </div>
+      <br />
       <div>
+        <BsFillJournalBookmarkFill size={42} />
         <h6>Record</h6>
-        {arr.map(i => {
-          return (
-            <div key={records[i]}>
+        <section>
+          {arr.map(i => {
+            return (
+              <div className='block'>
+                <div className='center txn-history'>
+                  <div key={records[i]} className='txn-list'>
 
-              {i}: {records[i]}   <button className='btn btn-outline-light' onClick={() => { editRecords(i, records[i]) }}>Edit</button>
-            </div>)
-        })}
+                    {i}: <span className='credit-amount'>{records[i]}</span>
+
+                  </div>
+                  <button className='btn btn-outline-light' onClick={() => { editRecords(i, records[i]) }}>Edit</button>
+                </div>
+              </div>
+            )
+          })}</section>
       </div>
     </div>
   );

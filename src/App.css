@@ -7,13 +7,34 @@ body{
   color: #fff !important;
 }
 
-.amount-box img {
-	width: 50px;
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  
+}
+
+.txn-history {
+	text-align: left;
+  display: flex;
+  flex-direction: row;
+}
+
+.txn-list{
+  padding : 12px 10px;
+  border: 3px solid #fff;
+  margin: 7px 0;
+  flex: 60%;
+}
+
+.credit-amount {
+	float: right;
 }
 
 .btn-group{
   color: #fff !important;
 }
+
 
 .btn {
 	margin: 8px;
